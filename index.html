@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+    <style>
+        body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td { margin:0; padding:0; box-sizing: border-box;}
+        body, button, input, select, textarea { font:12px/1.5tahoma, arial, \5b8b\4f53; }
+        h1, h2, h3, h4, h5, h6{ font-size:100%; }
+        address, cite, dfn, em, var { font-style:normal; }
+        code, kbd, pre, samp { font-family:couriernew, courier, monospace; }
+        small{ font-size:12px; }
+        ul, ol { list-style:none; }
+        a { text-decoration:none; }
+        a:hover { text-decoration:underline; }
+        sup { vertical-align:text-top; }
+        sub{ vertical-align:text-bottom; }
+        legend { color:#000; }
+        fieldset, img { border:0; }
+        button, input, select, textarea { font-size:100%; }
+        table { border-collapse:collapse; border-spacing:0; }
+        html{overflow-y: scroll}
+        .main-container{ position: relative; width:1080px;margin:0 auto;padding:0 20px;}
+        .main-title{text-align: center;font-size: 24px;margin: 20px;}
+        .main-content{margin-left: 150px;background-color: #f0f0f0;padding-left: 30px;}
+        .main-content > li{width:100%;margin-bottom: 20px;padding: 20px 0;}
+        .nav{ position: fixed;top:60px;width:150px;overflow: hidden}
+        .nav-li{margin-bottom:10px;}
+        .sub-nav{margin-left: 20px;}
+        xmp{width:94%;margin: 5px 0 20px;padding: 0 10px;background-color: #fff;border:1px solid #ddd;border-radius: 3px;}
+        h2,h3,h4,h5{margin: 10px 0;}
+        h2{font-size: 20px;text-align: center}
+        h3,h4,h5{font-size: 16px;}
+        h5{font-weight: normal}
+        .xmp-om-container xmp{margin:0 !important;}
+        .toolbar{text-align: center;padding-left: 150px;margin-bottom: 50px;}
+        button + button{margin-left: 50px;}
+    </style>
+</head>
+<body>
+    <div ng-app="myApp"  ng-controller="myctrl" class="main-container">
+        <h1 class="main-title">{{title.mainTitle}}</h1>
+        <ul class="nav">
+            <li class="nav-li" ng-repeat="nav in title.subTitle">
+                <a href="#" ng-click="tabActive()">{{nav.mainTitle}}</a>
+                <ul class="sub-nav">
+                    <li ng-repeat="subnav in nav.subTitle">
+                        <a href="#"  ng-click="tabActive()">{{(1+$parent.$index)+'.'+(1+$index)}} {{subnav}}</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="main-content">
+            <li id="nav-1" ng-show="active[0].isactive">
+                <h2>{{title.subTitle[0].mainTitle}}</h2>
+                <ul style="list-style: decimal">
+                    <li>
+                        <h3>结构、样式、行为分离</h3>
+                        <p>
+                            尽量确保文档和模板只包含 HTML 结构，样式都放到样式表里，行为都放到脚本里。
+                        </p>
+                    </li>
+                    <li>
+                        <h3>缩进</h3>
+                        <p>
+                            统一两个空格缩进（总之缩进统一即可），不要使用 Tab 或者 Tab、空格混搭。
+                        </p>
+                    </li>
+                    <li>
+                        <h3>文件编码</h3>
+                        <p>
+                            使用不带 BOM 的 UTF-8 编码。
+                        </p>
+                    </li>
+                    <li>
+                        <h3>结构、样式、行为分离</h3>
+                        <p>
+                            尽量确保文档和模板只包含 HTML 结构，样式都放到样式表里，行为都放到脚本里。
+                        </p>
+                        <xmp>
+在 HTML中指定编码 <meta charset="utf-8"> ；
+无需使用 @charset 指定样式表的编码，它默认为 UTF-8 （参考 @charset）；
+                        </xmp>
+                    </li>
+                    <li>
+                        <h3>一律使用小写字母</h3>
+                        <xmp>
+<!-- Recommended -->
+<img src="google.png" alt="Google">
+
+<!-- Not recommended -->
+<A HREF="/">Home</A>
+
+/* Recommended */
+color: #e5e5e5;
+
+/* Not recommended */
+color: #E5E5E5;
+                        </xmp>
+                    </li>
+                    <li>
+                        <h3>省略外链资源 URL 协议部分</h3>
+                        <p>
+                            省略外链资源（图片及其它媒体资源）URL 中的 http / https 协议，使 URL 成为相对地址，避免 Mixed Content 问题，减小文件字节数。
+                        </p>
+                        <xmp>
+<!-- Recommended -->
+<script src="//www.google.com/js/gweb/analytics/autotrack.js"></script>
+
+<!-- Not recommended -->
+<script src="http://www.google.com/js/gweb/analytics/autotrack.js"></script>
+/* Recommended */
+.example {
+background: url(//www.google.com/images/example);
+}
+
+/* Not recommended */
+.example {
+background: url(http://www.google.com/images/example);
+}
+                        </xmp>
+                    </li>
+                    <li>
+                        <h3>统一注释</h3>
+                        <p>
+                            通过配置编辑器，可以提供快捷键来输出一致认可的注释模式。
+                        </p>
+                        <ul>
+                            <h4>HTML 注释</h4>
+                            <li>
+                                <h5>模块注释</h5>
+                                <xmp>
+<!-- 文章列表列表模块 -->
+<div class="article-list">
+    ...
+</div>
+                                </xmp>
+                            </li>
+                            <li>
+                                <h5>区块注释</h5>
+                                <xmp>
+<!--
+@name: Drop Down Menu
+@description: Style of top bar drop down menu.
+@author: Ashu(Aaaaaashu@gmail.com)
+-->
+                                </xmp>
+                            </li>
+                            <h4>CSS 注释</h4>
+                            <li>
+                                <h5>区块注释</h5>
+                                <xmp>
+/* ==========================================================================
+组件块
+============================================================================ */
+
+/* 子组件块
+============================================================================ */
+.selector {
+padding: 15px;
+margin-bottom: 15px;
+}
+
+
+
+/* 子组件块
+============================================================================ */
+.selector-secondary {
+display: block; /* 注释*/
+}
+
+.selector-three {
+display: span;
+}
+                                </xmp>
+                            </li>
+                            <h4>JavaScript 注释</h4>
+                            <li>
+                                <ul style="list-style: circle;padding-left: 20px;">
+                                    <li>
+                                        单行注释<br>
+                                        必须独占一行。// 后跟一个空格，缩进与下一行被注释说明的代码一致。
+                                    </li>
+                                    <li>
+                                        多行注释<br>
+                                        避免使用 /*...*/ 这样的多行注释。有多行注释内容时，使用多个单行注释。
+                                    </li>
+                                    <li>
+                                        函数/方法注释
+                                    </li>
+                                    <li>
+                                        函数/方法注释必须包含函数说明，有参数和返回值时必须使用注释标识。；
+                                    </li>
+                                    <li>
+                                        参数和返回值注释必须包含类型信息和说明；
+                                    </li>
+                                    <li>
+                                        当函数是内部函数，外部不可访问时，可以使用 @inner 标识；
+                                    </li>
+                                </ul>
+                                <xmp>
+/**
+* 函数描述
+*
+* @param {string} p1 参数1的说明
+* @param {string} p2 参数2的说明，比较长
+*     那就换行了.
+* @param {number=} p3 参数3的说明（可选）
+* @return {Object} 返回值描述
+*/
+function foo(p1, p2, p3) {
+var p3 = p3 || 10;
+return {
+p1: p1,
+p2: p2,
+p3: p3
+};
+}
+                                </xmp>
+                            </li>
+                            <h4>文件注释</h4>
+                            <li>
+                                <span>文件注释用于告诉不熟悉这段代码的读者这个文件中包含哪些东西。 应该提供文件的大体内容, 它的作者, 依赖关系和兼容性信息。如下:</span>
+                                <xmp>
+/**
+* @fileoverview Description of file, its uses and information
+* about its dependencies.
+* @author user@meizu.com (Firstname Lastname)
+* Copyright 2015 Meizu Inc. All Rights Reserved.
+*/
+                                </xmp>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li id="nav-2" ng-show="active[1].isactive">
+                <h2>{{title.subTitle[1].mainTitle}}</h2>
+                <ul style="list-style: decimal">
+                    <li>
+                        <h3>HTML嵌套规则</h3>
+                        <xmp>
+/* 推荐嵌套层级 */
+<ul class="ui-nav">
+    <li class="ui-nav-item"> some text
+        <ul class="ui-nav-item-child">
+            <li> some text
+                <ul class="ui-list">
+                    <li class="ui-list-item"> some text</li>
+                </ul>
+            </li>
+                        ...
+        </ul>
+    </li>
+
+            ...
+</ul>
+                        </xmp>
+                        <ul class="xmp-om-container" style="list-style: circle;margin-left: 20px;">
+                            <li><xmp>a 不允许嵌套 div这种约束属于语义嵌套约束，与之区别的约束还有严格嵌套约束，比如a 不允许嵌套 a。</xmp></li>
+                            <li><xmp>严格嵌套约束在所有的浏览器下都不被允许；而语义嵌套约束，浏览器大多会容错处理，生成的文档树可能相互不太一样。</xmp></li>
+                            <li><xmp><li>只能用于 <ul> 或 <ol> 下；</xmp></li>
+                            <li><xmp><dd>, <dt> 只用于 <dl> 下；</xmp></li>
+                            <li><xmp><thead>, <tbody>, <tfoot>, <tr>, <td> 只用于 <table> 下；</xmp></li>
+                            <li><xmp>inline-Level 元素，仅可以包含文本或其它 inline-Level 元素;</xmp></li>
+                            <li><xmp><a>里不可以嵌套交互式元素<a>、<button>、<select>等;</xmp></li>
+                            <li><xmp><p>里不可以嵌套块级元素<div>、<h1>~<h6>、<p>、<ul>/<ol>/<li>、<dl>/<dt>/<dd>、<form>等。</xmp></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h3>第一行统一使用HTML5标准</h3>
+                        <xmp>
+<!DOCTYPE html>
+<html dir="ltr" lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <title>极客公园 | 创新者社区</title>
+    <meta name="keywords" content="xxxx, xxx, xxxxx" />
+    <meta name="description" content="xxxxxxxxxxxxxxxxxxxx" />
+                        </xmp>
+                    </li>
+                    <li>
+                        <h3>Meta 的使用：（需要根据具体需求按需选择）</h3>
+                        <xmp>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta http-equiv="Cache-Control" content="max-age=7200" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://feeds.geekpark.net/" />
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<script type="text/javascript" src="/js/xxx.js"></script>
+<link rel="stylesheet" href="/css/xxx.css">
+
+<script type="text/javascript">
+    //Google 统计代码 的位置在离</head>最近的位置
+</script>
+                        </xmp>
+                    </li>
+                    <li>
+                        <h3>Class 与 ID</h3>
+                        <ul style="list-style: circle;margin-left: 20px;">
+                            <li>class 应以功能或内容命名，不以表现形式命名；</li>
+                            <li>class 与 id 单词字母小写，多个单词组成时，采用中划线-分隔；</li>
+                            <li>使用唯一的 id 作为 Javascript hook, 同时避免创建无样式信息的 class；</li>
+                        </ul>
+                        <xmp>
+<!-- Not recommended -->
+<div class="j-hook left contentWrapper"></div>
+
+<!-- Recommended -->
+<div id="j-hook" class="sidebar content-wrapper"></div>
+                        </xmp>
+                    </li>
+                    <li>
+                        <h3>语义化标签</h3>
+                        <p>没有 CSS 的 HTML 是一个语义系统而不是 UI 系统。<br />
+                            通常情况下，每个标签都是有语义的，所谓语义就是你的衣服分为外套， 裤子，裙子，内裤等，各自有对应的功能和含义。所以你总不能把内裤套在脖子上吧。<br />
+                            此外语义化的 HTML 结构，有助于机器（搜索引擎）理解，另一方面多人协作时，能迅速了解开发者意图。</p>
+                    </li>
+                    <li>
+                        <h3>其它注意事项</h3>
+                        <ul class="xmp-om-container" style="list-style: circle;margin-left: 20px;">
+                            <li><xmp><img>标签默认缺省格式：<img src="xxx.png" alt="缺省时文字" /> 避免出现src="" 问题</xmp></li>
+                            <li><xmp><a>标签缺省格式：<a href="###" title="链接名称">xxx</> 注：target="_blank" 根据需求决定</xmp></li>
+                            <li><xmp><a>标签预留链接占位符使用###</xmp></li>
+                            <li><xmp>所有标签需要符合XHTML标准闭合</xmp></li>
+                            <li><xmp>一律统一标签结尾斜杠的书写形式：<br /> <hr /> 注意之间空格</xmp></li>
+                            <li><xmp>避免使用已过时标签，如：<b> <u> <i> 而用 <strong> <em>等代替</xmp></li>
+                            <li><xmp>使用data-xxx来添加自定义数据，如：<input data-xxx="yyy"/></xmp></li>
+                            <li><xmp>避免使用style="xxx:xxx;"的内联样式表</xmp></li>
+                            <li><xmp>特殊符号使用参考W3C标准</xmp></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </li>
+            <li id="nav-3" ng-show="active[2].isactive">
+                <h2>{{title.subTitle[2].mainTitle}}</h2>
+                <ul style="list-style: decimal">
+                    <li>
+                        <h3>声明块格式</h3>
+                        <ul style="list-style: circle;margin-left: 20px;">
+                            <li>选择器分组时，保持独立的选择器占用一行；</li>
+                            <li>声明块的左括号 { 前添加一个空格；</li>
+                            <li>声明块的右括号 } 应单独成行；</li>
+                            <li>声明语句中的 : 后应添加一个空格；</li>
+                            <li>声明语句应以分号 ; 结尾；</li>
+                            <li>一般以逗号分隔的属性值，每个逗号后应添加一个空格；</li>
+                            <li>rgb()、rgba()、hsl()、hsla() 或 rect() 括号内的值，逗号分隔，但逗号后不添加一个空格；</li>
+                            <li>避免为 0 值指定单位，例如，用 margin: 0; 代替 margin: 0px;；</li>
+                        </ul>
+                        <xmp>
+/*  Not recommended  */
+.selector, .selector-secondary, .selector[type=text] {
+    padding:15px;
+    margin:0px 0px 15px;
+    background-color:rgba(0, 0, 0, 0.5);
+    box-shadow:0px 1px 2px #CCC,inset 0 1px 0 #FFFFFF
+}
+
+/* Recommended */
+.selector,
+.selector-secondary,
+.selector[type="text"] {
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: rgba(0,0,0,.5);
+    box-shadow: 0 1px 2px #ccc, inset 0 1px 0 #fff;
+}
+                        </xmp>
+                    </li>
+                    <li>
+                        <h3>css书写顺序</h3>
+                        <ul style="list-style: circle;margin-left: 20px;">
+                            <li>位置属性(position, top, right, z-index, display, float等)</li>
+                            <li>大小(width, height, padding, margin)</li>
+                            <li>文字系列(font, line-height, letter-spacing, color- text-align等)</li>
+                            <li>背景(background, border等)</li>
+                            <li>其他(animation, transition等)</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h3>使用CSS缩写属性</h3>
+                        <p>CSS有些属性是可以缩写的，比如padding,margin,font等等，这样精简代码同时又能提高用户的阅读体验。</p>
+                        <xmp>
+/* Not recommended */
+.selector {
+    font-family: serif;
+    font-size: 100%;
+    line-height: 1.6;
+    padding-top: 2em;
+    padding-left: 1em;
+    padding-right: 1.5em;
+    padding-bottom: 0;
+}
+
+/* recommended */
+.selector {
+    font: 100%/1.6 serif;
+    padding: 2em 1.5em 0 1em;
+}
+                        </xmp>
+                    </li>
+                    <li>
+                        <h3>避免使用通用选择器</h3>
+                        <p>浏览器匹配文档中所有的元素后分别向上逐级匹配 class 为 content 的元素，直到文档的根节点。因此其匹配开销是非常大的，所以应避免使用关键选择器是通配选择器的情况。</p>
+                        <xmp>
+/* Not recommended */
+.content * {color: red;}
+                        </xmp>
+                    </li>
+                    <li>
+                        <h3>避免使用标签或 class 选择器限制 id 选择器</h3>
+                        <xmp>
+/* Not recommended */
+button#backButton {…}
+/* Recommended */
+#newMenuIcon {…}
+                        </xmp>
+                    </li>
+                    <li>
+                        <h3>避免使用标签限制 class 选择器</h3>
+                        <xmp>
+/* Not recommended */
+treecell.indented {…}
+/* Recommended */
+.treecell-indented {…}
+/* Much to recommended */
+.hierarchy-deep {…}
+                        </xmp>
+                    </li>
+                    <li>
+                        <h3>避免使用多层标签选择器。使用 class 选择器替换，减少css查找</h3>
+                        <xmp>
+/* Not recommended */
+treeitem[mailfolder="true"] > treerow > treecell {…}
+/* Recommended */
+.treecell-mailfolder {…}
+                        </xmp>
+                    </li>
+                    <li>
+                        <h3>避免使用子选择器</h3>
+                        <xmp>
+/* Not recommended */
+treehead treerow treecell {…}
+/* Recommended */
+treehead > treerow > treecell {…}
+/* Much to recommended */
+.treecell-header {…}
+                        </xmp>
+                    </li>
+                    <li>
+                        <h3>使用继承</h3>
+                        <xmp>
+/* Not recommended */
+#bookmarkMenuItem > .menu-left { list-style-image: url(blah) }
+/* Recommended */
+#bookmarkMenuItem { list-style-image: url(blah) }
+                        </xmp>
+                    </li>
+                    <li>
+                        <h3>去掉小数点前的“0”</h3>
+                        <xmp>
+/* Not recommended */
+.selector {
+    font-size: 0.8em;
+}
+
+/* recommended */
+.selector {
+    font-size: .8em
+}
+                        </xmp>
+                    </li>
+                    <li>
+                        <h3>简写命名</h3>
+                        <p>很多用户都喜欢简写类名，但前提是要让人看懂你的命名才能简写！</p>
+                        <xmp>
+/* Not recommended */
+.navigation {
+    padding: 2em 1.5em 0 1em;
+}
+.atr {
+    color: #c83;
+}
+
+/* recommended */
+.nav {
+    padding: 2em 1.5em 0 1em;
+}
+.author {
+    color: #c83;
+}
+                        </xmp>
+                    </li>
+                    <li>
+                        <h3>16进制颜色代码缩写</h3>
+                        <p>能缩写的颜色一定要缩写</p>
+                        <xmp>
+/* Not recommended */
+.selector {
+    color: #ddeeff;
+}
+
+/* recommended */
+.selector {
+    color: #def;
+}
+                        </xmp>
+                    </li>
+                    <li>
+                        <h3>连字符CSS选择器命名规范</h3>
+                        <p>
+                            长名称或词组可以使用中横线(-)来为选择器命名。<br /><br />
+                            不建议使用“_”下划线来命名CSS选择器.<br />
+                            输入的时候少按一个shift键； 浏览器兼容问题 （比如使用_tips的选择器命名，在IE6是无效的） 能良好区分JavaScript变量命名（JS变量命名是用“_”）
+                        </p>
+                        <xmp>
+/* Not recommended */
+.maintitle {
+    font-size: 100%;
+}
+.main_title {
+    font-size: 100%;
+}
+
+/* recommended */
+.main-title{
+    font-size: 100%;
+}
+                        </xmp>
+                    </li>
+                    <li>
+                        <h3>不要随意使用id</h3>
+                        <p>
+                            id在JS是唯一的，不能多次使用，而使用class类选择器却可以重复使用，另外id的优先级优先与class，所以id应该按需使用，而不能滥用。
+                        </p>
+                    </li>
+                    <li>
+                        <h3>媒体查询（Media query）的位置</h3>
+                        <p>
+                            将媒体查询放在尽可能相关规则的附近。不要将他们打包放在一个单一样式文件中或者放在文档底部。如果你把他们分开了，将来只会被大家遗忘。
+                        </p>
+                        <xmp>
+.element { ... }
+.element-avatar { ... }
+.element-selected { ... }
+
+@media (max-width: 768px) {
+.element { ...}
+.element-avatar { ... }
+.element-selected { ... }
+}
+                        </xmp>
+                    </li>
+                </ul>
+            </li>
+            <li id="nav-4" ng-show="active[3].isactive">
+                <h2>{{title.subTitle[3].mainTitle}}</h2>
+                <ul style="list-style: decimal">
+                    <li>
+                        <h3>命名规则</h3>
+                        <p>
+                            变量, 使用 Camel 命名法。
+                        </p>
+                        <xmp>var loadingModules = {}; </xmp>
+                        <p>
+                            私有属性、变量和方法以下划线 _ 开头。
+                        </p>
+                        <xmp>var _privateMethod = {};</xmp>
+                        <p>
+                            常量, 使用全部字母大写，单词间下划线分隔的命名方式。
+                        </p>
+                        <xmp>var HTML_ENTITY = {}; </xmp>
+                        <p>
+                            函数, 使用 Camel 命名法。<br />
+                            函数的参数, 使用 Camel 命名法。
+                        </p>
+                        <xmp>
+function stringFormat(source) {}
+function hear(theBells) {}
+                        </xmp>
+                        <p>
+                            类, 使用 Pascal 命名法<br />
+                            类的 方法 / 属性, 使用 Camel 命名法
+                        </p>
+                        <xmp>
+function TextNode(value, engine) {
+    this.value = value;
+    this.engine = engine;
+}
+
+TextNode.prototype.clone = function () {
+    return this;
+};
+                        </xmp>
+                        <p>
+                            枚举变量 使用 Pascal 命名法。<br />
+                            枚举的属性， 使用全部字母大写，单词间下划线分隔的命名方式。
+                        </p>
+                        <xmp>
+var TargetState = {
+    READING: 1,
+    READED: 2,
+    APPLIED: 3,
+    READY: 4
+};
+                        </xmp>
+                    </li>
+                    <li>
+                        <h3>对象</h3>
+                        <p>使用字面值创建对象</p>
+                        <xmp>
+// bad
+var item = new Object();
+
+// good
+var item = {};
+                        </xmp>
+                        <p>不要使用保留字 reserved words 作为键</p>
+                        <xmp>
+// bad
+var superman = {
+    class: 'superhero',
+    default: { clark: 'kent' },
+    private: true
+};
+
+// good
+var superman = {
+    klass: 'superhero',
+    defaults: { clark: 'kent' },
+    hidden: true
+};
+                        </xmp>
+                    </li>
+                    <li>
+                        <h3>数组</h3>
+                        <p>使用字面值创建数组</p>
+                        <xmp>
+// bad
+var items = new Array();
+
+// good
+var items = [];
+                        </xmp>
+                        <p>如果你不知道数组的长度，使用push</p>
+                        <xmp>
+var someStack = [];
+
+// bad
+someStack[someStack.length] = 'abracadabra';
+
+// good
+someStack.push('abracadabra');
+                        </xmp>
+                    </li>
+                    <li>
+                        <h3>字符串</h3>
+                        <p>对字符串使用单引号 ''</p>
+                        <xmp>
+// bad
+var name = "Bob Parr";
+
+// good
+var name = 'Bob Parr';
+
+// bad
+var fullName = "Bob " + this.lastName;
+
+// good
+var fullName = 'Bob ' + this.lastName;
+                        </xmp>
+                        <p>超过80(也有规定140的，项目具体可制定)个字符的字符串应该使用字符串连接换行</p>
+                        <xmp>
+// bad
+var errorMessage = 'This is a super long error that was thrown because of Batman. When you stop to think about how Batman had anything to do with this, you would get nowhere fast.';
+
+// bad
+var errorMessage = 'This is a super long error that \
+was thrown because of Batman. \
+When you stop to think about \
+how Batman had anything to do \
+with this, you would get nowhere \
+fast.';
+
+
+// good
+var errorMessage = 'This is a super long error that ' +
+'was thrown because of Batman.' +
+'When you stop to think about ' +
+'how Batman had anything to do ' +
+'with this, you would get nowhere ' +
+'fast.';
+                        </xmp>
+                        <p>编程时使用join而不是字符串连接来构建字符串，特别是IE:</p>
+                        <xmp>
+// Not recommended
+var $myList = $("#list");
+for(var i = 0; i < 10000; i++){
+    $myList.append("<li>"+i+"</li>");
+}
+
+// Recommended
+var $myList = $("#list");
+var list = "";
+for(var i = 0; i < 10000; i++){
+    list += "<li>"+i+"</li>";
+}
+$myList.html(list);
+
+// Much to recommended
+var array = [];
+for(var i = 0; i < 10000; i++){
+    array[i] = "<li>"+i+"</li>";
+}
+$myList.html(array.join(''));
+                        </xmp>
+                    </li>
+                    <li>
+                        <h3>函数</h3>
+                        <p>函数表达式</p>
+                        <xmp>
+// 匿名函数表达式
+var anonymous = function() {
+    return true;
+};
+
+// 有名函数表达式
+var named = function named() {
+    return true;
+};
+
+// 立即调用函数表达式
+(function() {
+    console.log('Welcome to the Internet. Please follow me.');
+})();
+                        </xmp>
+                        <p>绝对不要在一个非函数块里声明一个函数，把那个函数赋给一个变量。浏览器允许你这么做，但是它们解析不同。</p>
+                        <xmp>
+// bad
+if (currentUser) {
+    function test() {
+        console.log('Nope.');
+    }
+}
+
+// good
+if (currentUser) {
+    var test = function test() {
+        console.log('Yup.');
+    };
+}
+                        </xmp>
+                        <p>绝对不要把参数命名为 arguments, 这将会逾越函数作用域内传过来的 arguments 对象.</p>
+                        <xmp>
+// bad
+function nope(name, options, arguments) {
+// ...stuff...
+}
+
+// good
+function yup(name, options, args) {
+// ...stuff...
+}
+                        </xmp>
+                    </li>
+                    <li>
+                        <h3>属性</h3>
+                        <p>当使用变量和特殊非法变量名时，访问属性时可以使用中括号(. 优先).</p>
+                        <xmp>
+var luke = {
+    jedi: true,
+    age: 28
+};
+
+function getProp(prop) {
+    return luke[prop];
+}
+
+var isJedi = getProp('jedi');
+                        </xmp>
+                    </li>
+                    <li>
+                        <h3>变量</h3>
+                        <p>总是使用 var 来声明变量，如果不这么做将导致产生全局变量，我们要避免污染全局命名空间。</p>
+                        <xmp>
+// bad
+superPower = new SuperPower();
+
+// good
+var superPower = new SuperPower();
+                        </xmp>
+                        <p>使用一个 var 以及新行声明多个变量，缩进4个空格。</p>
+                        <xmp>
+// bad
+var items = getItems();
+var goSportsTeam = true;
+var dragonball = 'z';
+
+// good
+var items = getItems(),
+    goSportsTeam = true,
+    dragonball = 'z';
+                        </xmp>
+                        <p>最后再声明未赋值的变量，当你想引用之前已赋值变量的时候很有用。</p>
+                        <xmp>
+// bad
+var i, len, dragonball,
+items = getItems(),
+goSportsTeam = true;
+
+// bad
+var i, items = getItems(),
+dragonball,
+goSportsTeam = true,
+len;
+
+// good
+var items = getItems(),
+    goSportsTeam = true,
+    dragonball,
+    length,
+    i;
+                        </xmp>
+                        <p>在作用域顶部声明变量，避免变量声明和赋值引起的相关问题。</p>
+                        <xmp>
+// bad
+function() {
+    test();
+    console.log('doing stuff..');
+
+    //..other stuff..
+
+    var name = getName();
+
+    if (name === 'test') {
+        return false;
+    }
+
+    return name;
+}
+
+// good
+function() {
+    var name = getName();
+
+    test();
+    console.log('doing stuff..');
+
+    //..other stuff..
+
+    if (name === 'test') {
+        return false;
+    }
+
+    return name;
+}
+
+// bad
+function() {
+    var name = getName();
+
+    if (!arguments.length) {
+        return false;
+    }
+
+    return true;
+}
+
+// good
+function() {
+    if (!arguments.length) {
+        return false;
+    }
+
+    var name = getName();
+
+    return true;
+}
+                        </xmp>
+                    </li>
+                    <li>
+                        <h3>条件表达式和等号</h3>
+                        <ul style="list-style: circle">
+                            <li>合理使用 === 和 !== 以及 == 和 !=.</li>
+                            <li>合理使用表达式逻辑操作运算.</li>
+                            <li>条件表达式的强制类型转换遵循以下规则：
+                                <ul style="list-style: disc;margin-left: 20px;">
+                                    <li>对象 被计算为 true</li>
+                                    <li>Undefined 被计算为 false</li>
+                                    <li>Null 被计算为 false</li>
+                                    <li>布尔值 被计算为 布尔的值</li>
+                                    <li>数字 如果是 +0, -0, or NaN 被计算为 false , 否则为 true</li>
+                                    <li>字符串 如果是空字符串 '' 则被计算为 false, 否则为 true</li>
+                                </ul>
+                            </li>
+                            <li>
+                                使用快捷方式.
+                                <xmp>
+// bad
+if (name !== '') {
+// ...stuff...
+}
+
+// good
+if (name) {
+// ...stuff...
+}
+
+// bad
+if (collection.length > 0) {
+// ...stuff...
+}
+
+// good
+if (collection.length) {
+// ...stuff...
+}
+                                </xmp>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h3>块</h3>
+                        <p>给所有多行的块使用大括号</p>
+                        <xmp>
+// bad
+if (test)
+    return false;
+
+// good
+if (test) return false;
+
+// good
+if (test) {
+    return false;
+}
+
+// bad
+function() { return false; }
+
+// good
+function() {
+    return false;
+}
+                        </xmp>
+                    </li>
+                    <li>
+                        <h3>逗号</h3>
+                        <p>不要将逗号放前面</p>
+                        <xmp>
+// bad
+var once
+    , upon
+    , aTime;
+
+// good
+var once,
+    upon,
+    aTime;
+
+// bad
+var hero = {
+    firstName: 'Bob'
+    , lastName: 'Parr'
+    , heroName: 'Mr. Incredible'
+    , superPower: 'strength'
+};
+
+// good
+var hero = {
+    firstName: 'Bob',
+    lastName: 'Parr',
+    heroName: 'Mr. Incredible',
+    superPower: 'strength'
+};
+                        </xmp>
+                        <p>不要加多余的逗号，这可能会在IE下引起错误，同时如果多一个逗号某些ES3的实现会计算多数组的长度。</p>
+                        <xmp>
+// bad
+var hero = {
+    firstName: 'Kevin',
+    lastName: 'Flynn',
+};
+
+var heroes = [
+    'Batman',
+    'Superman',
+];
+
+// good
+var hero = {
+    firstName: 'Kevin',
+    lastName: 'Flynn'
+};
+
+var heroes = [
+    'Batman',
+    'Superman'
+];
+                        </xmp>
+                    </li>
+                    <li>
+                        <h3>分号</h3>
+                        <p>语句结束一定要加分号</p>
+                        <xmp>
+// bad
+(function() {
+    var name = 'Skywalker'
+    return name
+})()
+
+// good
+(function() {
+    var name = 'Skywalker';
+    return name;
+})();
+
+// good
+;(function() {
+    var name = 'Skywalker';
+    return name;
+})();
+                        </xmp>
+                    </li>
+                    <li>
+                        <h3>类型转换</h3>
+                        <p>在语句的开始执行类型转换.</p>
+                        <p>字符串:</p>
+                        <xmp>
+//  => this.reviewScore = 9;
+
+// bad
+var totalScore = this.reviewScore + '';
+
+// good
+var totalScore = '' + this.reviewScore;
+
+// bad
+var totalScore = '' + this.reviewScore + ' total score';
+
+// good
+var totalScore = this.reviewScore + ' total score';
+                        </xmp>
+                        <p>对数字使用 parseInt 并且总是带上类型转换的基数.，如parseInt(value, 10)</p>
+                        <xmp>
+var inputValue = '4';
+
+// bad
+var val = new Number(inputValue);
+
+// bad
+var val = +inputValue;
+
+// bad
+var val = inputValue >> 0;
+
+// bad
+var val = parseInt(inputValue);
+
+// good
+var val = Number(inputValue);
+
+// good
+var val = parseInt(inputValue, 10);
+
+// good
+/**
+* parseInt was the reason my code was slow.
+* Bitshifting the String to coerce it to a
+* Number made it a lot faster.
+*/
+var val = inputValue >> 0;
+                        </xmp>
+                        <p>布尔值</p>
+                        <xmp>
+var age = 0;
+
+// bad
+var hasAge = new Boolean(age);
+
+// good
+var hasAge = Boolean(age);
+
+// good
+var hasAge = !!age;
+                        </xmp>
+                    </li>
+                    <li>
+                        <h3>事件</h3>
+                        <p>当给事件附加数据时，传入一个哈希而不是原始值，这可以让后面的贡献者加入更多数据到事件数据里而不用找出并更新那个事件的事件处理器</p>
+                        <xmp>
+// bad
+$(this).trigger('listingUpdated', listing.id);
+
+...
+
+$(this).on('listingUpdated', function(e, listingId) {
+// do something with listingId
+});
+
+// good
+$(this).trigger('listingUpdated', { listingId : listing.id });
+
+...
+
+$(this).on('listingUpdated', function(e, data) {
+// do something with data.listingId
+});
+                        </xmp>
+                    </li>
+                    <li>
+                        <h3>JQuery</h3>
+                        <p>对于jQuery对象以$开头，以和原生DOM节点区分。</p>
+                        <xmp>
+// bad
+var menu = $(".menu");
+
+// good
+var $menu = $(".menu");
+                        </xmp>
+                        <p>缓存jQuery查询</p>
+                        <xmp>
+// bad
+function setSidebar() {
+    $('.sidebar').hide();
+
+    // ...stuff...
+
+    $('.sidebar').css({
+        'background-color': 'pink'
+    });
+}
+
+// good
+function setSidebar() {
+    var $sidebar = $('.sidebar');
+    $sidebar.hide();
+
+    // ...stuff...
+
+    $sidebar.css({
+        'background-color': 'pink'
+    });
+}
+                        </xmp>
+                        <p>对DOM查询使用级联的 $('.sidebar ul') 或 $('.sidebar ul')，</p>
+                        <p>对有作用域的jQuery对象查询使用 find</p>
+                        <xmp>
+// bad
+$('.sidebar', 'ul').hide();
+
+// bad
+$('.sidebar').find('ul').hide();
+
+// good
+$('.sidebar ul').hide();
+
+// good
+$('.sidebar > ul').hide();
+
+// good (slower)
+$sidebar.find('ul');
+
+// good (faster)
+$($sidebar[0]).find('ul');
+                        </xmp>
+                        <p>每个页面只使用一次document的ready事件，这样便于调试与行为流跟踪。</p>
+                        <p>事件利用jQuery.on从页面分离到JavaScript文件。</p>
+                        <xmp>
+// bad
+<a id="myLink" href="#" onclick="myEventHandler();"></a>
+
+// good
+<a id="myLink" href="#"></a>
+
+$("#myLink").on("click", myEventHandler);
+                        </xmp>
+                        <p>对于Ajax使用promise方式。</p>
+                        <xmp>
+// bad
+$.ajax({
+    ...
+    success : function(){
+    },
+    error : function(){
+    }
+})
+
+// good
+$.ajax({.
+..
+}).then( function( ){
+// success
+}, function( ){
+// error
+})
+                        </xmp>
+                        <p>利用promise的deferred对象解决延迟注册问题。</p>
+                        <xmp>
+var dtd = $.Deferred(); // 新建一个deferred对象
+　　var wait = function(dtd){
+　　　　var tasks = function(){
+　　　　　　alert("执行完毕！");
+　　　　　　dtd.resolve(); // 改变deferred对象的执行状态
+　　　　};
+　　　　setTimeout(tasks,5000);
+　　　　return dtd;
+　　};
+                        </xmp>
+                        <p>HTML中Style、以及JavaScript中style移到CSS中class，在HTML、JavaScript中引入class，而不是直接style。</p>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="toolbar">
+            <button ng-click="goPre()">上一页</button><button ng-click="goNext()">下一页</button>
+        </div>
+    </div>
+
+<script type="text/javascript">
+    var app = angular.module('myApp', []);
+    app.controller('myctrl', function($scope) {
+        $scope.title = {
+            mainTitle:'前端规范整理',
+            subTitle:[{
+                mainTitle:'基本原则',
+            },{
+                mainTitle:'HTML规范',
+            },{
+                mainTitle:'CSS规范',
+            },{
+                mainTitle:'JS规范',
+            }]
+        };
+        $scope.active=[];
+        for(var i in $scope.title.subTitle){
+            $scope.active.push({isactive:false,index:i});
+        }
+        $scope.active[0].isactive=true;
+        $scope.activeIndex = 0;
+        $scope.tabActive = function(){
+            $scope.active[$scope.activeIndex].isactive = false;
+            $scope.active[this.$index].isactive = true;
+            $scope.activeIndex = this.$index;
+            window.scrollTo(0,0);
+        };
+        $scope.goPre = function () {
+            if($scope.activeIndex){
+                $scope.active[$scope.activeIndex].isactive = false;
+                $scope.activeIndex--;
+                $scope.active[$scope.activeIndex].isactive = true;
+                window.scrollTo(0,0);
+            }
+        };
+        $scope.goNext = function () {
+            if($scope.activeIndex<$scope.active.length-1){
+                $scope.active[$scope.activeIndex].isactive = false;
+                $scope.activeIndex++;
+                $scope.active[$scope.activeIndex].isactive = true;
+                window.scrollTo(0,0);
+            }
+        };
+    });
+</script>
+</body>
+</html>
